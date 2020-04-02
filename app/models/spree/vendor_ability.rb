@@ -83,7 +83,7 @@ class Spree::VendorAbility
   end
 
   def apply_payment_permissions
-    can [:index, :update], Spree::Payment
+    can [:index, :create, :fire, :update], Spree::Payment
   end
 
   def apply_shipping_methods_permissions
