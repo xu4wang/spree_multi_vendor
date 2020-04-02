@@ -15,6 +15,7 @@ class Spree::VendorAbility
       apply_product_properties_permissions
       apply_properties_permissions
       apply_shipment_permissions
+      apply_payment_permissions
       apply_shipping_methods_permissions
       apply_stock_permissions
       apply_stock_item_permissions
@@ -79,6 +80,10 @@ class Spree::VendorAbility
 
   def apply_shipment_permissions
     can :update, Spree::Shipment, inventory_units: { line_item: { product: { vendor_id: @vendor_ids } } }
+  end
+
+  def apply_payment_permissions
+    can [:index, :update], Spree::Payment
   end
 
   def apply_shipping_methods_permissions
