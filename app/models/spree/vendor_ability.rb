@@ -15,7 +15,7 @@ class Spree::VendorAbility
       apply_product_properties_permissions
       apply_properties_permissions
       apply_shipment_permissions
-      apply_payment_permissions
+      #apply_payment_permissions
       apply_shipping_methods_permissions
       apply_stock_permissions
       apply_stock_item_permissions
@@ -83,7 +83,7 @@ class Spree::VendorAbility
   end
 
   def apply_payment_permissions
-    can [:index, :create, :fire, :new], Spree::Payment
+    can [:index, :create, :fire, :new, :show], Spree::Payment
   end
 
   def apply_shipping_methods_permissions
