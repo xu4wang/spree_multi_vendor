@@ -15,7 +15,7 @@ class Spree::VendorAbility
       apply_product_properties_permissions
       apply_properties_permissions
       apply_shipment_permissions
-      #apply_payment_permissions
+      apply_payment_permissions
       apply_shipping_methods_permissions
       apply_stock_permissions
       apply_stock_item_permissions
@@ -25,6 +25,7 @@ class Spree::VendorAbility
       apply_vendor_permissions
       apply_vendor_settings_permissions
       apply_state_changes_permissions
+      apply_translations_permissions
     end
   end
 
@@ -36,7 +37,7 @@ class Spree::VendorAbility
 
   def apply_order_permissions
     cannot :create, Spree::Order
-    can [:admin, :index, :edit, :update, :cart], Spree::Order, line_items: { product: { vendor_id: @vendor_ids } }
+    can [:admin, :index, :edit, :update, :cart, :fire, :new, :create], Spree::Order, line_items: { product: { vendor_id: @vendor_ids } }
   end
 
   def apply_image_permissions
@@ -83,7 +84,7 @@ class Spree::VendorAbility
   end
 
   def apply_payment_permissions
-    can [:index, :create, :fire, :new, :show], Spree::Payment
+    can [:manage], Spree::Payment
   end
 
   def apply_shipping_methods_permissions
@@ -126,6 +127,11 @@ class Spree::VendorAbility
     can [:admin, :index], Spree::StateChange do |state_change|
       (@vendor_ids & state_change.user.vendor_ids).any?
     end
+  end
+
+  def apply_translations_permissions
+    can :manage, Spree::Product::Translation
+    can :manage, :translations
   end
 
   def cannot_display_model(model)
